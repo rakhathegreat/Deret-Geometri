@@ -242,7 +242,7 @@ html ,body {
     min-height: 65px; 
   }
 
-  #container-deskripsi > * {
+  #container-deskripsi {
     display: none;
   }
 
@@ -258,6 +258,6 @@ html ,body {
     border-radius: 7px;
     display: flex;
     align-items: center;
-    background: #fff;
+    background: #FFF;
   }
 }

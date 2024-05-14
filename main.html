@@ -113,28 +113,6 @@
 <script src="script/kalkulator.js"></script>
 <script src="script/tombol.js"></script>
 
-<script>
-    // Function to remove the element on small screens
-    function removeElementOnSmallScreen() {
-        var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-        var elementToRemove = document.getElementById('container-deskripsi');
-        var container = document.getElementById('container-hasil-mobile');
-        
-
-
-        if (screenWidth <= 600 && elementToRemove) {
-            elementToRemove.parentNode.removeChild(elementToRemove);
-            container.innerHTML = `
-                <h2>Hasil :</h2>
-                <div id="hasil"></div>
-            `;
-        }
-    }
-    removeElementOnSmallScreen();
-    window.addEventListener('resize', removeElementOnSmallScreen);
-</script>
-
-
 </body>
 </html>
 

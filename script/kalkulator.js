@@ -426,3 +426,19 @@ function popup() {
           })
     }
 }
+
+function removeElementOnSmallScreen() {
+    var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    var container = document.getElementById('container-hasil-mobile');
+    
+
+
+    if (screenWidth <= 600) {
+        container.innerHTML = `
+            <h2>Hasil :</h2>
+            <div id="hasil"></div>
+        `;
+    }
+}
+removeElementOnSmallScreen();
+window.addEventListener('resize', removeElementOnSmallScreen);
