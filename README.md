@@ -1,2 +1,2 @@
-# Deret-Geometri
+
 # deret-geometri
