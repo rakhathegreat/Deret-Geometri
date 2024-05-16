@@ -10,14 +10,29 @@ function rasio() {
             return decimalToFraction(result);
         }
     } else {
-        series = formatExpression(series);
-        series = series.split(',');
-        Swal.close()
-        let result = ratio(series);
-        if (((result * 10) % 10) == 0) {
-            return (result);
+        if (isGeometricSeries()) {
+            series = formatExpression(series);
+            if (series.includes(",")) {
+                series = series.split(',');
+                Swal.close()
+                let result = ratio(series);
+                if (((result * 10) % 10) == 0) {
+                    return (result);
+                } else {
+                    return decimalToFraction(result);
+                }
+            } else {
+                series = series.split('+');
+                Swal.close()
+                let result = ratio(series);
+                if (((result * 10) % 10) == 0) {
+                    return (result);
+                } else {
+                    return decimalToFraction(result);
+                }
+            }
         } else {
-            return decimalToFraction(result);
+            return notif()
         }
     }
 }
@@ -25,6 +40,53 @@ function rasio() {
 function rasio2(series) {
     let result = math.evaluate(series, {n: 2}) / math.evaluate(series, {n: 1});
     return (result);
+}
+
+function isGeometricSeries() {
+    let series = mathField.latex();
+    series = (formatExpression(series));
+    if (series.includes(",")) {
+        series = series.split(',');
+        if (series.length <= 1) {
+            return false;
+        }
+    
+        let ratio = series[1] / series[0];
+    
+        for (let i = 2; i < series.length; i++) {
+            if (series[i] / series[i - 1] !== ratio) {
+                return false;
+            }
+        }
+    
+        return true;
+    } else {
+        series = series.split('+');
+        if (series.length <= 1) {
+            return false;
+        }
+    
+        let ratio = series[1] / series[0];
+    
+        for (let i = 2; i < series.length; i++) {
+            if (series[i] / series[i - 1] !== ratio) {
+                return false;
+            }
+        }
+    
+        return true;
+    }
+}
+
+function notif() {
+        Swal.fire({
+            title: "Bukan Deret Geometri!",
+            icon: "warning",
+            showConfirmButton: true,
+            customClass: {
+                input: "custom-font"
+            }
+        })
 }
 
 function jumlah() {
@@ -111,7 +173,6 @@ function jumlahSukuKeN(upperBound) {
         return(sum);
     }
 }
-
 
 function isConvergence() {
     let series = mathField.latex();
@@ -220,41 +281,58 @@ function sukuKeN(upperBound) {
 }
 
 function tambahInput() {
-    Swal.fire({
-        title: "Silahkan Masukan Batas Atas!",
-        input: "number",
-        showConfirmButton: true,
-        customClass: {
-            input: "custom-font"
-          }
-  
-    }).then(value => {
-        let result = jumlahSukuKeN(value.value)
-        if (((result * 10) % 10) == 0) {
-            return print(result);
-        } else {
-            return print(decimalToFraction(result));
-        }
-    })
+    if (isGeometricSeries()) {
+        Swal.fire({
+            title: "Silahkan Masukan Batas Atas!",
+            input: "number",
+            showConfirmButton: true,
+            customClass: {
+                input: "custom-font"
+              }
+      
+        }).then(value => {
+            try {
+                let result = jumlahSukuKeN(value.value)
+                if (((result * 10) % 10) == 0) {
+                    return print(result);
+                } else {
+                    return print(decimalToFraction(result));
+                }
+            } catch (e) {
+                return;
+            }
+        })
+    } else {
+        return notif();
+    }
+    
 }
 
 function tambahInput2() {
-    Swal.fire({
-        title: "Silahkan Masukan Batas Atas!",
-        input: "number",
-        showConfirmButton: true,
-        customClass: {
-            input: "custom-font"
-          }
-  
-    }).then(value => {
-        let result = sukuKeN(value.value)
-        if (((result * 10) % 10) == 0) {
-            return print(result);
-        } else {
-            return print(decimalToFraction(result));
-        }
-    })
+    if (isGeometricSeries()) {
+        Swal.fire({
+            title: "Silahkan Masukan Batas Atas!",
+            input: "number",
+            showConfirmButton: true,
+            customClass: {
+                input: "custom-font"
+              }
+      
+        }).then(value => {
+            try {
+                let result = sukuKeN(value.value)
+                if (((result * 10) % 10) == 0) {
+                    return print(result);
+                } else {
+                    return print(decimalToFraction(result));
+                }
+            } catch (e) {
+                return;
+            }
+        })
+    } else {
+        return notif();
+    }
 }
 
 function hitung() {
@@ -425,7 +503,7 @@ function popup() {
                 cancelButtonColor: "#d33",
                 html: `<div id="operation-container">
                         <button onclick="print(decimalToFraction(hitung()))">Hitung</button>
-                        <button onclick="print(isConvergence())">Tes Konvergen</button>
+                        <button onclick="tambahInput()">Jumlah suku ke n</button>
                         <button onclick="print(rasio())">Rasio</button>
                     </div>`,
                 customClass: {
