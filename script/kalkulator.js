@@ -229,7 +229,12 @@ function tambahInput() {
           }
   
     }).then(value => {
-        print(decimalToFraction(jumlahSukuKeN(value.value)));
+        let result = jumlahSukuKeN(value.value)
+        if (((result * 10) % 10) == 0) {
+            return print(result);
+        } else {
+            return print(decimalToFraction(result));
+        }
     })
 }
 
@@ -243,20 +248,27 @@ function tambahInput2() {
           }
   
     }).then(value => {
-        print(decimalToFraction(sukuKeN(value.value)));
+        let result = sukuKeN(value.value)
+        if (((result * 10) % 10) == 0) {
+            return print(result);
+        } else {
+            return print(decimalToFraction(result));
+        }
     })
 }
 
 function hitung() {
     let series = mathField.latex() ;
     series = (formatExpression(series));
+    Swal.close()
     return(math.evaluate(series));
 }
-
 function print(result) {
     const equationsHTML = result;
     document.getElementById('hasil').innerHTML = equationsHTML;
+    document.getElementById('hasil2').innerHTML = equationsHTML;
     MathQuill.getInterface(2).StaticMath(document.getElementById('hasil'));
+    MathQuill.getInterface(2).StaticMath(document.getElementById('hasil2'));
     
 }
 
@@ -290,7 +302,7 @@ function popup() {
     try {
         if (series == "") {
             Swal.fire({
-                title: "Silahkan Masukan Deret Geometri!",
+                title: "Input !",
                 icon: "warning",
                 showConfirmButton: true,
                 customClass: {
@@ -361,8 +373,8 @@ function popup() {
                             cancelButtonColor: "#d33",
                             html:   `<div id="operation-container">
                                         <button onclick="">Jumlah</button>
-                                        <button onclick="console.log(tambahInput())">Jumlah suku ke n</button>
-                                        <button onclick="console.log(tambahInput2())">Suku ke n</button>
+                                        <button onclick="tambahInput()">Jumlah suku ke n</button>
+                                        <button onclick="tambahInput2()">Suku ke n</button>
                                         <button onclick="print(rasio())">Rasio</button>
                                     </div>`,
                             customClass: {
@@ -376,8 +388,8 @@ function popup() {
                             showConfirmButton: false,
                             cancelButtonColor: "#d33",
                             html:   `<div id="operation-container">
-                                        <button onclick="console.log(tambahInput())">Jumlah suku ke n</button>
-                                        <button onclick="console.log(tambahInput2())">Suku ke n</button>
+                                        <button onclick="tambahInput()">Jumlah suku ke n</button>
+                                        <button onclick="tambahInput2()">Suku ke n</button>
                                         <button onclick="print(rasio())">Rasio</button>
                                     </div>`,
                             customClass: {
@@ -407,9 +419,15 @@ function popup() {
             print(hitung())
         }  else {
             Swal.fire({
-                title: "Silahkan Masukan Deret Geometri!",
-                icon: "warning",
-                showConfirmButton: true,
+                title: "Silahkan Pilih Operasi",
+                showCancelButton: true,
+                showConfirmButton: false,
+                cancelButtonColor: "#d33",
+                html: `<div id="operation-container">
+                        <button onclick="print(decimalToFraction(hitung()))">Hitung</button>
+                        <button onclick="print(isConvergence())">Tes Konvergen</button>
+                        <button onclick="print(rasio())">Rasio</button>
+                    </div>`,
                 customClass: {
                     input: "custom-font"
                   }
@@ -426,19 +444,3 @@ function popup() {
           })
     }
 }
-
-function removeElementOnSmallScreen() {
-    var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-    var container = document.getElementById('container-hasil-mobile');
-    
-
-
-    if (screenWidth <= 600) {
-        container.innerHTML = `
-            <h2>Hasil :</h2>
-            <div id="hasil"></div>
-        `;
-    }
-}
-removeElementOnSmallScreen();
-window.addEventListener('resize', removeElementOnSmallScreen);
