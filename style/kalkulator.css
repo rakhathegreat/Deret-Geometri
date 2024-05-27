@@ -11,11 +11,12 @@ html ,body {
 }
 
 #container {
-  height : 100vh;
+  min-height : 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 8rem ;
 }
 
 #container-hasil {
@@ -212,7 +213,9 @@ html ,body {
 
 @media (max-width: 1000px) {
   #box {
-    width: 90vw;
+    width: auto; 
+    height: auto;
+    padding: 6vw;
   }
 
   #container-deskripsi {
@@ -220,13 +223,16 @@ html ,body {
   }
 
   #math-field {
-    width: 78.5vw;
-    min-height: 75px; 
+    width: 80vw;
+    min-height: 75px;
+    margin-top: 2vw;
+
   }
 
   #container-kalkulator {
     width: 80vw;
     min-height: 37vw;
+    margin-top: 2vw;
   }
 
   #container-hasil-mobile {
@@ -236,6 +242,7 @@ html ,body {
     display: flex;
     align-items: center;
     background: #FFF;
+    margin-top: 2vw;
   }
 
   #container-hasil-mobile > h2 {
@@ -261,13 +268,15 @@ html ,body {
 
 @media (max-width: 600px) {
   #box {
-    width: 90vw; 
-    height: 122vw;
+    width: auto; 
+    height: auto;
+    padding: 6vw;
   }
 
   #container-kalkulator {
     width: 80vw;
     height: 70vw;
+    margin-top: 3vw;
   }
 
   #container-kalkulator > div {
@@ -292,8 +301,9 @@ html ,body {
   }
 
   #math-field {
-    width: 76.5vw;
-    min-height: 65px; 
+    width: 80vw;
+    min-height: 65px;
+    margin-top: 3vw;
   }
 
   #container-deskripsi {
@@ -301,8 +311,6 @@ html ,body {
   }
 
   #container-hasil-mobile > h2 {
-    font-family: barlow;
-    font-weight: 500;
     margin: 0 15px 0 15px;
   }
 
@@ -313,5 +321,10 @@ html ,body {
     display: flex;
     align-items: center;
     background: #FFF;
+    margin-top: 3vw;
+
+    font-family: barlow;
+    font-weight: 700;
+    font-size: 1.7rem;
   }
 }

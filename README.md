@@ -1,2 +1,1 @@
-# deret-geometri
-# percobaan
+# deret-geomertri-full
